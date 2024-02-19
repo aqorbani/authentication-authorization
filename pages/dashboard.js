@@ -16,10 +16,46 @@ export default function Dashboard() {
     router.push("/");
   };
 
+  const editHandler = async () => {
+    const res = await fetch("/api/update", {
+      method: "POST",
+      body: JSON.stringify({ name, lastName, password }),
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await res.json();
+    console.log(data);
+  };
+
   return (
     <div>
       <h3>dashboard</h3>
       <button onClick={signOutHandler}>Sign out</button>
+      <hr />
+      <hr />
+      <hr />
+      <h3>update</h3>
+      <input
+        type="text"
+        name="name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="name"
+      />
+      <input
+        type="text"
+        name="name"
+        value={lastName}
+        onChange={(e) => setLastName(e.target.value)}
+        placeholder="lastName"
+      />
+      <input
+        type="text"
+        name="name"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="password"
+      />
+      <button onClick={editHandler}>edit</button>
     </div>
   );
 }
