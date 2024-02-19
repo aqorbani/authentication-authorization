@@ -15,7 +15,7 @@ export default function SignIn() {
     });
     const data = await res.json();
     if (data.status === "success") {
-      router.push("/");
+      router.push("/dashboard");
     }
   };
 

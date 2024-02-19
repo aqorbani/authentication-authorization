@@ -9,6 +9,9 @@ export default function Home() {
       <button>
         <Link href="/signin">Sign In</Link>
       </button>
+      <button>
+        <Link href="/dashboard">dashboard</Link>
+      </button>
     </>
   );
 }
