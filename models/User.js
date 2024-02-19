@@ -9,6 +9,14 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  name: {
+    type: String,
+    required: false,
+  },
+  lastName: {
+    type: String,
+    required: false,
+  },
   createdAt: {
     type: Date,
     default: () => Date.now(),

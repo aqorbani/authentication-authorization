@@ -1,8 +1,13 @@
 import { useRouter } from "next/router";
 import { verifyToken } from "@/utils/auth";
+import { useState } from "react";
 
 export default function Dashboard() {
   const router = useRouter();
+
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPassword] = useState("");
 
   const signOutHandler = async () => {
     const res = await fetch("/api/auth/signout");
