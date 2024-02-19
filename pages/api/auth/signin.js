@@ -1,6 +1,7 @@
 import User from "@/models/User";
 import connectDB from "@/utils/ConnectDB";
 import { verifyPassword } from "@/utils/auth";
+import { sign } from "jsonwebtoken";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -24,7 +25,10 @@ export default async function handler(req, res) {
       const isValid = await verifyPassword(password, existingUser.password);
 
       if (isValid) {
-        console.log(isValid);
+        const secretKey = process.env.SECRET_KEY;
+        const expiration = 24 * 60 * 60;
+        const token = sign({ email }, secretKey, { expiresIn: expiration });
+        console.log(token);
       } else {
         return res
           .status(422)
