@@ -1,6 +1,7 @@
 import User from "@/models/User";
 import connectDB from "@/utils/ConnectDB";
 import { verifyPassword } from "@/utils/auth";
+import { serialize } from "cookie";
 import { sign } from "jsonwebtoken";
 
 export default async function handler(req, res) {
@@ -28,7 +29,21 @@ export default async function handler(req, res) {
         const secretKey = process.env.SECRET_KEY;
         const expiration = 24 * 60 * 60;
         const token = sign({ email }, secretKey, { expiresIn: expiration });
-        console.log(token);
+
+        const serialized = serialize("token", token, {
+          httpOnly: true,
+          maxAge: expiration,
+          path: "/",
+        });
+
+        return res
+          .status(200)
+          .setHeader("Set-Cookie", serialized)
+          .json({
+            status: "success",
+            message: "Logged in!",
+            data: { email: existingUser.email },
+          });
       } else {
         return res
           .status(422)
