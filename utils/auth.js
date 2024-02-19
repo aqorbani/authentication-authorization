@@ -1,3 +1,5 @@
+import { verify } from "jsonwebtoken";
+
 const { hash, compare } = require("bcrypt");
 
 async function hashPassword(password) {
@@ -10,4 +12,17 @@ async function verifyPassword(password, hashedPassword) {
   return isValid;
 }
 
-export { hashPassword, verifyPassword };
+function verifyToken(token, secretKey) {
+  try {
+    const result = verify(token, secretKey);
+    if (result.email) {
+      return { email: result.email };
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+}
+
+export { hashPassword, verifyPassword, verifyToken };
